@@ -7,6 +7,7 @@ export interface User {
   phone?: string;
   role: UserRole;
   createdAt: Date;
+  photoUrl?: string;
 }
 
 export interface Video {

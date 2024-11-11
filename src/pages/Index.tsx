@@ -5,9 +5,10 @@ import VideoManager from "@/components/VideoManager";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
 import { Video, Progress } from "@/types";
+import Header from "@/components/Header";
 
 const Index = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const [currentVideo, setCurrentVideo] = useState<Video>({
     id: "welcome",
     title: "Vídeo de Boas-vindas",
@@ -45,21 +46,14 @@ const Index = () => {
     setCurrentVideo(updatedVideo);
   };
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "Bom dia";
-    if (hour < 18) return "Boa tarde";
-    return "Boa noite";
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold">
-            {getGreeting()}, {user?.name}!
-          </h1>
-          <div className="flex items-center gap-4">
+      <Header />
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-semibold">{currentVideo.title}</h2>
             {(user?.role === "admin" || user?.role === "teacher") && (
               <Sheet>
                 <SheetTrigger asChild>
@@ -75,16 +69,8 @@ const Index = () => {
                 </SheetContent>
               </Sheet>
             )}
-            <Button variant="outline" onClick={logout}>
-              Sair
-            </Button>
           </div>
-        </div>
-      </header>
-      
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-semibold mb-4">{currentVideo.title}</h2>
+          
           <p className="text-gray-600 mb-6">{currentVideo.description}</p>
           
           <VideoPlayer
