@@ -10,7 +10,7 @@ interface Comment {
   id: string;
   userId: string;
   userName: string;
-  userPhotoUrl?: string;
+  userPhotoUrl?: string;  // Make userPhotoUrl optional
   content: string;
   createdAt: string;
 }
@@ -30,6 +30,7 @@ const CommentSection = ({ lessonId }: { lessonId: string }) => {
           id: "1",
           userId: "1",
           userName: "João Silva",
+          userPhotoUrl: undefined,  // Explicitly set to undefined
           content: "Excelente aula!",
           createdAt: new Date().toISOString(),
         },
@@ -89,7 +90,7 @@ const CommentSection = ({ lessonId }: { lessonId: string }) => {
         {comments?.map((comment) => (
           <div key={comment.id} className="flex gap-4">
             <Avatar>
-              <AvatarImage src={comment.userPhotoUrl} />
+              <AvatarImage src={comment.userPhotoUrl || undefined} />
               <AvatarFallback>
                 {comment.userName.split(" ").map((n) => n[0]).join("").toUpperCase()}
               </AvatarFallback>
