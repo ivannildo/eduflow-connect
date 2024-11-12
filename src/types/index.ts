@@ -28,3 +28,12 @@ export interface Progress {
   playCount: number;
   lastPosition: number;
 }
+
+export interface Comment {
+  id: string;
+  userId: string;
+  userName: string;
+  userPhotoUrl?: string;
+  content: string;
+  createdAt: string;
+}

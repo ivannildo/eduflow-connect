@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import Login from "@/pages/Login";
 import Index from "@/pages/Index";
 import Dashboard from "@/pages/Dashboard";
+import Lessons from "@/pages/Lessons";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,14 @@ const App = () => (
               element={
                 <PrivateRoute allowedRoles={["admin"]}>
                   <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/lessons/*"
+              element={
+                <PrivateRoute allowedRoles={["admin", "teacher"]}>
+                  <Lessons />
                 </PrivateRoute>
               }
             />
