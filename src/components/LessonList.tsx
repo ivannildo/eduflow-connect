@@ -22,6 +22,7 @@ const LessonList = () => {
           description: "Aprenda os conceitos básicos",
           url: "https://www.youtube.com/watch?v=your-video-id",
           order: 1,
+          maxPlays: 3,
         },
       ];
     },

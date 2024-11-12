@@ -8,6 +8,7 @@ import Login from "@/pages/Login";
 import Index from "@/pages/Index";
 import Dashboard from "@/pages/Dashboard";
 import Lessons from "@/pages/Lessons";
+import LessonsNew from "@/pages/LessonsNew";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,22 @@ const App = () => (
               element={
                 <PrivateRoute allowedRoles={["admin", "teacher"]}>
                   <Lessons />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/lessons/new"
+              element={
+                <PrivateRoute allowedRoles={["admin", "teacher"]}>
+                  <LessonsNew />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/lessons/:id/edit"
+              element={
+                <PrivateRoute allowedRoles={["admin", "teacher"]}>
+                  <LessonsNew />
                 </PrivateRoute>
               }
             />
