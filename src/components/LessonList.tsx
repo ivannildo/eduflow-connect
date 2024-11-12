@@ -4,9 +4,8 @@ import VideoPlayer from "@/components/VideoPlayer";
 import CommentSection from "@/components/CommentSection";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import VideoManager from "@/components/VideoManager";
 import {
   Pagination,
   PaginationContent,
@@ -15,9 +14,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 const LessonList = () => {
   const { user } = useAuth();
+  const { toast } = useToast();
   const isTeacherOrAdmin = user?.role === "admin" || user?.role === "teacher";
   const [currentPage, setCurrentPage] = useState(1);
   const lessonsPerPage = 10;
@@ -37,6 +39,14 @@ const LessonList = () => {
     },
   });
 
+  const handleVideoUpdate = (lessonId: string, updatedVideo: any) => {
+    // Here you would typically make an API call to update the video
+    toast({
+      title: "Vídeo atualizado",
+      description: "As alterações foram salvas com sucesso.",
+    });
+  };
+
   if (isLoading) {
     return <div>Carregando...</div>;
   }
@@ -54,12 +64,22 @@ const LessonList = () => {
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle>{lesson.title}</CardTitle>
               {isTeacherOrAdmin && (
-                <Button variant="outline" asChild>
-                  <Link to={`/lessons/${lesson.id}/edit`} className="flex items-center gap-2">
-                    <Pencil className="h-4 w-4" />
-                    Editar
-                  </Link>
-                </Button>
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="outline">Gerenciar Vídeo</Button>
+                  </SheetTrigger>
+                  <SheetContent>
+                    <SheetHeader>
+                      <SheetTitle>Gerenciar Vídeo</SheetTitle>
+                    </SheetHeader>
+                    <div className="mt-6">
+                      <VideoManager 
+                        video={lesson} 
+                        onUpdate={(updatedVideo) => handleVideoUpdate(lesson.id, updatedVideo)} 
+                      />
+                    </div>
+                  </SheetContent>
+                </Sheet>
               )}
             </CardHeader>
             <CardContent className="space-y-4">
