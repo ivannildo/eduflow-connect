@@ -17,7 +17,12 @@ const Login = () => {
     setIsLoading(true);
     try {
       await login(email, password);
-      navigate("/dashboard");
+      const userType = localStorage.getItem("user_type");
+      if (userType === "admin") {
+        navigate("/dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.error(error);
     } finally {

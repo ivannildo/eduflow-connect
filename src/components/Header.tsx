@@ -1,7 +1,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Home, User } from "lucide-react";
+import { Home, User, Video, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   DropdownMenu,
@@ -27,10 +27,32 @@ const Header = () => {
     <header className="bg-white border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-2">
-            <Home className="h-6 w-6 text-primary" />
-            <span className="font-semibold text-xl">EduFlow</span>
-          </Link>
+          <div className="flex items-center space-x-4">
+            <Link to="/" className="flex items-center space-x-2">
+              <Home className="h-6 w-6 text-primary" />
+              <span className="font-semibold text-xl">EduFlow</span>
+            </Link>
+            
+            {(user?.role === "admin" || user?.role === "teacher") && (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link to="/lessons" className="flex items-center space-x-2">
+                    <Video className="h-4 w-4" />
+                    <span>Aulas</span>
+                  </Link>
+                </Button>
+              </>
+            )}
+            
+            {user?.role === "admin" && (
+              <Button variant="ghost" asChild>
+                <Link to="/dashboard" className="flex items-center space-x-2">
+                  <Settings className="h-4 w-4" />
+                  <span>Dashboard</span>
+                </Link>
+              </Button>
+            )}
+          </div>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
